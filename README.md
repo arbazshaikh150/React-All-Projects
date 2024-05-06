@@ -202,3 +202,63 @@ Jsx Syntax:
 `
     <h2 style={{fontSize:10px}}>
 `
+
+
+# Utility(Helper) Function (Hooks)
+Custom Hooks can also be created
+
+Button and Inc and Decrement (Event Listener)
+`
+    function Counter(){
+        int x = 0;
+        return(
+            <>
+                Count : {x};
+                <button onClick={() => {
+                    x += 1;
+                }}> Inc </button>
+            </>
+        )
+    }
+`
+But yaha kuch nhi ho rha hai ( No Rerender ho rha hai)
+Special variable: State variable
+`import {useState} from 'react'`
+
+Passed With the array !!
+`useState(0)` --> Return an array with the variable and function --> const [x , setX];
+setX --> State Setter function.
+
+### Concept
+Conditinal Rendering:
+`{x % 2 == 0 ? "Even" : "Odd"}` PowerFul Tool !!!
+E.g.
+const [isEditing , setIsEditing] = useState(false);
+isEditing ? <input /> : <dusra koi />
+
+We can pass array in the usestate
+useState([initial values]);
+
+IMPORTANT: (Documentation Padho!)
+todos.map(() => {}) --> return an array , har element ke liye yeh map mai  jayega and then joh bhi callback return karega woh array mai store hote rhega!!
+
+setArray --> array hi pass karni hoti hai , tabhi hame destructing karna padega
+
+
+# Attributes
+Analogue with the argument of the function ( PROPS ). (DRY Properties)
+props --> objects (jaha se bhih call karna hai waha sab likh denge , syntax same as that of html (name="Arbaz")) --> props.name
+
+we can use it by using the destructure op (pass the default values!!
+)
+
+Special Prop --> Children Props.
+<Arbaz> <h1> Arbaz </h1> </Arbaz>
+children props holds the html contents..
+
+Learn about the props using the documentation.
+Component ko list mai iterate karte hai na uske liye key props use karna hota. (React identify ki konsi item rerender hui hai (list mai se !))
+
+E.g.
+Book --> 1st book , 2nd book (Difficult ko unique identify , coz element change)
+Book --> Book ka name (kar sakte hai , same as key !!!)
