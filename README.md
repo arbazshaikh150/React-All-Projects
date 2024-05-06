@@ -262,3 +262,7 @@ Component ko list mai iterate karte hai na uske liye key props use karna hota. (
 E.g.
 Book --> 1st book , 2nd book (Difficult ko unique identify , coz element change)
 Book --> Book ka name (kar sakte hai , same as key !!!)
+
+# Pokedex
+Using Third Party Api
+
