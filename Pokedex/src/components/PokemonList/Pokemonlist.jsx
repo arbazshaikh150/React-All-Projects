@@ -101,7 +101,7 @@ function PokemonList(){
         <div className="pokemon-list-wrapper">
             <div className="pokemon-wrapper">
             {(isLoading ) ? "Loading.." : 
-            pokemonList.map((p) => <Pokemon name={p.name} image={p.image} key={p.id} />)
+            pokemonList.map((p) => <Pokemon name={p.name} image={p.image} key={p.id} id={p.id}/>)
             }
             </div>
 
@@ -118,5 +118,8 @@ function PokemonList(){
             </div>
         </div>
     )
+
+    // Adding the details of the pokemon once i will click on the card
+    //  Click --> Network Request --> Adding it on our webpage
 }
 export default PokemonList;

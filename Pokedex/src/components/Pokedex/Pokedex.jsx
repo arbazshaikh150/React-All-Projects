@@ -11,8 +11,9 @@ import Search from "../Search/Search";
 import './pokedex.css'
 function Pokedex(){
     return (
+        //  Hame card par click karne ke baad ek naya page chahate hai !!
+        // State variable op
         <div className="pokedex-wrapper">
-        <h1 id="pokedex-heading">Pokedex</h1>
         <Search />
         < PokemonList />
         </div>
