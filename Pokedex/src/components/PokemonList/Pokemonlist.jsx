@@ -10,16 +10,42 @@ import Pokemon from "../Pokemon/Pokemon";
 
 //  Console.log karke sab check karte rhna chahiye !!!
 
+   
+
+//  Multiple set states error de rha hai , issliye usse resolve karne ke liye hame setState ke andar callback jaisa pass karna padega!!! , qki same instance sabmai same hi chle jaata hai !!
+// Saare callback queue ho jaati hai , then number ki value updated hi hogi --> Same use kaaro hi mat 
+
 function PokemonList(){
 
+
     
-    const [x , setX] = useState(0);
+//  For handling the multiple stata variable
+// Method:
+// Maintain some object and uss object main yeh saare usestate daal do then woh object ko State variable ki tarah treat kar do !!
 
-    const [pokemonList , setPokemonList] = useState([]);
-    const [isLoading , setIsLoading] = useState(true);
+//  Single object would be enough
+const [pokemonListState , setpokemonListState] = useState({
+    pokemonList: [],
+    isLoading: true,
+    pokedoxUrl: 'https://pokeapi.co/api/v2/pokemon',
+    nextUrl : '',
+    prevUrl: ''
+}) 
 
-    const [nextUrl , setNextUrl] = useState("");
-    const [prevUrl , setprevUrl] = useState("");
+// For setting the value:
+// For changing the values
+//  Callback mai paramater usestate wala hi hota hai !!
+// setpokemonListState((state) => ({...state , isloading : true}))
+    
+    // const [x , setX] = useState(0);
+
+    // const [pokemonList , setPokemonList] = useState([]);
+    // const [isLoading , setIsLoading] = useState(true);
+
+    // const [nextUrl , setNextUrl] = useState("");
+    // const [prevUrl , setprevUrl] = useState("");
+
+
     // Hook
     // Two argument , 1 Callback and dependency array !!
 
@@ -32,18 +58,30 @@ function PokemonList(){
     // } , [x]);
 
     /// For implementing the next and previous jab bhi next aur previous click ho tab ham isse change kar denge !!
-    const [pokedoxUrl , setPokedexUrl] = useState('https://pokeapi.co/api/v2/pokemon')
+
+    // const [pokedoxUrl , setPokedexUrl] = useState('https://pokeapi.co/api/v2/pokemon')
 
     async function downloadPokemon(){
         //// Jaise hi downloading start waise hi , loading true ho jayega
-        setIsLoading(true);
+
+        // setIsLoading(true);
+        
+        setpokemonListState((state) => ({...state , isLoading: true}));
 
         
-        const response = await axios.get(pokedoxUrl);
+        // const response = await axios.get(pokedoxUrl);
+
+        const response = await axios.get(pokemonListState.pokedoxUrl);
+
         // Api ke response ko ache se dekho
 
         // Finally the api is downloaded
-        setIsLoading(false);
+
+        // setIsLoading(false);
+
+        //  Yaha par karne ki zarurat nhi h qki hame sab download hone ke baad isse false karna hai , aur yeh cursor blinking ka bhi problem de rha tha !!!
+
+        // setpokemonListState((state) => ({...state , isLoading : false}));
 
 
         /// For further use we can store it in array!
@@ -52,8 +90,15 @@ function PokemonList(){
 
 
         ////Setting the url for the next and the prev one
-        setNextUrl(response.data.next);
-        setprevUrl(response.data.previous);
+        // setNextUrl(response.data.next);
+
+        setpokemonListState((state) => ({...state , nextUrl: response.data.next , prevUrl: response.data.previous}));
+
+        // setprevUrl(response.data.previous);
+
+        //  Upar already ek mai kar diya hu !
+        // setpokemonListState({ ...pokemonListState , prevUrl: response.data.previous});
+
 
         /// Now we have to iterate over all the element (pokemon) in our array
 
@@ -77,13 +122,16 @@ function PokemonList(){
                 id : pokemon.id,
                 name : pokemon.name,
                 // Got this using the console log and taking the necessary relevant information
-             image: (pokemon.sprites.other) ?pokemon.sprites.other.dream_world.front_default : './Arbaz.jpg',
+             image: (pokemon.sprites.other) ? pokemon.sprites.other.dream_world.front_default : './Arbaz.jpg',
 
              types:pokemon.types,
             }
         });
 
-        setPokemonList(res);
+        // setPokemonList(res);
+
+        setpokemonListState((state) => ({...state , pokemonList : res , isLoading : false}));
+
 
 
         //// Also we have response.data mai next and previous url wala bhi hai !!
@@ -96,23 +144,29 @@ function PokemonList(){
     useEffect(() => {
         // Fetching the api data
         downloadPokemon();
-    } , [pokedoxUrl])// Jab bhi next aur previous click ho !!
+    } , [pokemonListState.pokedoxUrl])// Jab bhi next aur previous click ho !!
     return(
         <div className="pokemon-list-wrapper">
             <div className="pokemon-wrapper">
-            {(isLoading ) ? "Loading.." : 
-            pokemonList.map((p) => <Pokemon name={p.name} image={p.image} key={p.id} id={p.id}/>)
+            {(pokemonListState.isLoading) ? "Loading..." : 
+            pokemonListState.pokemonList.map((p) => <Pokemon name={p.name} image={p.image} key={p.id} id={p.id}/>)
             }
             </div>
 
             {/* Adding Buttons */}
             <div className="controls">
-              <button className="prev" disabled={prevUrl === null} onClick={() => {
-                setPokedexUrl(prevUrl)
+              <button className="prev" disabled={pokemonListState.prevUrl === null} onClick={() => {
+                const urlToSet = pokemonListState.prevUrl;
+                setpokemonListState({...pokemonListState ,
+                    pokedoxUrl: urlToSet})
               }}>Previous</button>  
-              <button className="next" disabled={nextUrl === null} onClick={() => {
+              <button className="next" disabled={pokemonListState.nextUrl === null} onClick={() => {
+
+                const urlToSet = pokemonListState.nextUrl;
                 // Jaise hi pokedex ka url change hoga waise hi useeffect wapas call hoga !!
-                setPokedexUrl(nextUrl)
+                setpokemonListState({...pokemonListState ,
+                    pokedoxUrl: 
+                    urlToSet})
               }}
               >Next</button>
             </div>
