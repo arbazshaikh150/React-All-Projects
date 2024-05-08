@@ -1,11 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import UsePokemonList from "./usePokemonList";
 
 
 //  Isse id milega uss id ke upar yeh pokemon layega uske type ke upar yeh similar pokemon bhi layega then dono ko page mai print karne ka kaam karega
 
-function usePokemonDetail(id){
+function usePokemonDetail(id , pokemonName){
     //  Fetching the id from the url params (CustomRoutes mai send kiye the hamne)
 
     console.log(id);
@@ -21,7 +20,15 @@ function usePokemonDetail(id){
 
     // Writing the function
     async function downloadPokemons(){
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+        let response;
+        if(pokemonName){
+            // Fetching based on the pokemon details
+
+            response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+        }
+        else{
+            response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+        }
 
         const pokemonOfSameTypes = await axios.get(`https://pokeapi.co/api/v2/type/${response.data.types !== null ? response.data.types[0].type.name : 'fire' }`);
 
@@ -45,10 +52,10 @@ function usePokemonDetail(id){
             similarPokemon : pokemonOfSameTypes.data.pokemon
         })
 
-            // setpokemonListState((state) => ({
-            //     ...state , 
-            //     type : response.data.types ? response.data.types[0].type.name : ''
-            // }))
+            setpokemonListState((state) => ({
+                ...state , 
+                type : response.data.types ? response.data.types[0].type.name : ''
+            }))
 
         // Jab sab kuch set ho gya hai
     }
@@ -62,7 +69,8 @@ function usePokemonDetail(id){
     // By default fire
 
 
-    const {pokemonListState , setpokemonListState} = UsePokemonList()
+    // const {pokemonListState , setpokemonListState} = UsePokemonList()
+    const {pokemonListState , setpokemonListState} = useState({})
 
 
     // Kyuki jab bhi click ho toh hame fetch karke laana hai 

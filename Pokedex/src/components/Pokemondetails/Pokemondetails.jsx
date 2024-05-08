@@ -14,7 +14,7 @@ import usePokemonDetail from "../../hooks/usePokemonDetail";
 
 //  React Router dom mai ek aur hook hota hai UseParam
 
-function Pokemondetails(){
+function Pokemondetails({pokemonName}){
     // //  Fetching the id from the url params (CustomRoutes mai send kiye the hamne)
     const {id} = useParams();
 
@@ -66,7 +66,9 @@ function Pokemondetails(){
     //     downloadPokemons();
     // } , []);  
     //  Hamne custom hooks mai lik diya hai !!!
-    const {pokemon} = usePokemonDetail(id);
+    const {pokemon} = usePokemonDetail(id , pokemonName);
+
+
 
     return (
         <div className="pokemon-details-wrapper">
@@ -80,7 +82,7 @@ function Pokemondetails(){
                 pokemon.types && pokemon.similarPokemon &&
                 <div> More {pokemon.types[0]} type pokemon
                 <ul>
-                {pokemon.similarPokemon.map((p) => <li key={p.pokemon.slot}>{p.pokemon.name}</li>)}
+                {pokemon.similarPokemon.map((p) => <li key={p.pokemon.url}>{p.pokemon.name}</li>)}
                 </ul>
                 </div>
             }
@@ -94,7 +96,7 @@ export default Pokemondetails;
 /* 
 <div className="pokemon-types">
                 // {/* Key prop don't forget  */
-                // {/* Always all the error can be easily hand;e by conditional stataments */}
+                // {/* Always all the error can be easily handle by conditional stataments */}
 
 //                 {pokemon.types && pokemon.types.map((t) => <div key={t.name}> {t} </div> )}
 //             </div>
