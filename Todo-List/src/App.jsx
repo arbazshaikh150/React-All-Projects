@@ -1,11 +1,16 @@
 
-import { useState } from 'react'
+import { useReducer, useState } from 'react'
 import './App.css'
 import Addtodo from './components/AddTodo/Addtodo'
 import Todolist from './components/TodoList/Todolist'
 
 // Importing context
 import TodoContext from './context/todoContext.js';
+import todoReducer from './reducers/todoReducer.js';
+
+import TodoDispatchContext from './context/todoDispatchContext.js';
+
+
 // import { useContext } from 'react';
 
 
@@ -17,10 +22,18 @@ function App() {
 
 
   
-  const [list , setList] = useState([
-    {id : 1 , todoData : 'todo 1' , finished: false},
-    {id : 2 , todoData : 'todo 2' , finished: true},
-  ])
+  // const [list , setList] = useState([
+  //   {id : 1 , todoData : 'todo 1' , finished: false},
+  //   {id : 2 , todoData : 'todo 2' , finished: true},
+  // ])
+
+  //  Using the reducer
+
+  const [list , dispatch] = useReducer(todoReducer , []);
+
+
+
+
   // Value props --> passed as a object.
 
 
@@ -40,16 +53,32 @@ function App() {
   // const {list , setList} = useContext();
 
   return (
-    <TodoContext.Provider value={{list , setList}}>
-    {/* Waha se ham isse todo ka input bhej rhe hai aur yeh yahi callback mai render kar rha hai !! */}
-    <Addtodo updatelist={(todo) => setList([...list , {id : list.length + 1 , todoData: todo , finished : false}])}/>
+    // Context api 
+    <TodoContext.Provider value={{list }}>
 
-    {/* Eaarlier */}
-    {/* <Todolist list={list} updatelist={setList}/> */}
 
-    {/* Now */}
-    <Todolist/>
+      {/* Passed as a object !!!! mat bhulo */}
+      <TodoDispatchContext.Provider value={{dispatch}}>
 
+          {/* Waha se ham isse todo ka input bhej rhe hai aur yeh yahi callback mai render kar rha hai !! */}
+          {/* <Addtodo updatelist={(todo) => setList([...list , {id : list.length + 1 , todoData: todo , finished : false}])}/> */}
+
+
+          {/* Using reducer */}
+          <Addtodo updatelist={(todo) => 
+            dispatch({
+              type : 'add-todo' , payload : {
+              todoText : todo
+            }
+          })
+          }/>
+
+          {/* Earlier */}
+          {/* <Todolist list={list} updatelist={setList}/> */}
+
+          {/* Now */}
+          <Todolist/>
+    </TodoDispatchContext.Provider>
     </TodoContext.Provider>
   )
 }

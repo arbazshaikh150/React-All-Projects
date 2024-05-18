@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import todoDispatchContext from "../../context/todoDispatchContext";
 
 
 // Child ko parent se contact karna hai callback karna padd rha hai ! , aur bhot complication bhi aa rhi hai , which is  not a better way to do this 
@@ -12,18 +13,30 @@ import { useState } from "react";
 
 // Context ko ham parent bana denge aur baaki saari components uske child bana do , toh saare child ke pass woh parent ka access ho jayega
 
-function Addtodo({updatelist}){
+
+
+
+function Addtodo(){
+
+    // Clean up
+    const {dispatch} = useContext(todoDispatchContext);
 
     const [inputText , setinputtext] = useState('');
     return (
 
         <div>
-            <input type="text" placeholder="Add next todo" 
+            <input type="text" placeholder={!inputText && "Add next todo" }
+            value={inputText}
             onChange={e => setinputtext(e.target.value)}/>
             {/* Adding the new todo item */}
             <button
             onClick={() => {
-                updatelist(inputText);
+                // Jaise hi yeh call karenge waise hi waha se set ho jayega 
+                dispatch({
+                    type : 'add-todo' , payload : {
+                        // Passing the content for the todo (which is stored in input text)
+                    todoText: inputText
+                  }})
                 setinputtext('');
             }}
             >Add</button>
