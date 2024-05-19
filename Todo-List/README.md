@@ -27,3 +27,30 @@ type property and payload property (iske andar aur custom objects rhenge)
 
 Har states ke liye hame joh bhi karna hai , woh waha se trigger karenge
 callback toh execute karna ho tab ham action ko execute kar denge (dispatch.)
+
+
+# Redux (Predictable library)
+State container for JS apps 
+1) Centralized
+2) Debuggable (Redux dev tool (analogue with gdb (time travelling))).
+3) Flexible.
+
+`Redux Toolkit`
+
+# Redux Core 
+Not a react project , it is basically npm project.
+ Contains main function
+
+` npm install redux`
+
+Important Functions!!
+Function In Redux: (Top - Level Exports )
+1) Compose
+2) Apply Middleware
+3) Create store 
+4) Combine Reducer
+5) Bind Action Creator
+
+
+1) Compose
+

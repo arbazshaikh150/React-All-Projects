@@ -18,6 +18,10 @@ import TodoDispatchContext from './context/todoDispatchContext.js';
 // Binding with the App
 
 
+// Redux State management library
+//  Gives Enhance capability. (Global variable analogue op)
+
+
 function App() {
 
 
