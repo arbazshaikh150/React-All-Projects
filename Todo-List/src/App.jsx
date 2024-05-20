@@ -9,6 +9,9 @@ import TodoContext from './context/todoContext.js';
 import todoReducer from './reducers/todoReducer.js';
 
 import TodoDispatchContext from './context/todoDispatchContext.js';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addTodo, deleteTodo, editTodo, todoFinished } from './actions/todoAction.js';
 
 
 // import { useContext } from 'react';
@@ -33,7 +36,7 @@ function App() {
 
   //  Using the reducer
 
-  const [list , dispatch] = useReducer(todoReducer , []);
+  // const [list , dispatch] = useReducer(todoReducer , []);
 
 
 
@@ -56,6 +59,27 @@ function App() {
 // Joh bhi value mai provide kiye rhenge woh saari value yaha mil jayegi !!!
   // const {list , setList} = useContext();
 
+
+
+
+  // Using dispatch here
+
+  // Binding with the dispatch
+  const dispatch = useDispatch();
+  const actions = bindActionCreators({addTodo , deleteTodo , editTodo, todoFinished} , dispatch );
+
+
+  // Now (React - redux)
+  return (
+    <>
+
+      {/* Passing as a prop for avoiding the use of dispatch */}
+      <Addtodo addTodo={actions.addTodo}/>
+      <Todolist deleteTodo={actions.deleteTodo} editTodo={actions.editTodo} todoFinished={actions.todoFinished}/>
+    </>
+  )
+
+  // Earlier
   return (
     // Context api 
     <TodoContext.Provider value={{list }}>

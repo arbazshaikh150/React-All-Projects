@@ -3,8 +3,13 @@ import Todo from "../Todo/Todo";
 import todoContext from "../../context/todoContext";
 import { useContext } from "react";
 import todoDispatchContext from "../../context/todoDispatchContext";
+import { useDispatch, useSelector } from "react-redux";
 
-function Todolist(){
+
+
+function Todolist({deleteTodo , editTodo , todoFinished}){
+    // No argument needed
+    const dispatch = useDispatch();
 
 
     // Ordering matter karegi dhyaan rkhna kon ky access kar sakta hai !!!
@@ -12,16 +17,27 @@ function Todolist(){
 
     // State variables op
     //  Todocontext importing 
-    const {list} = useContext(todoContext);
 
-    const {dispatch} = useContext(todoDispatchContext);
+    // const {list} = useContext(todoContext);
+
+    // React redux using the callback
+
+    // state.todo means joh hamne key value diye the na wohi le rha hai
+
+    // List ka access (joh phle ham context se laa rhe the)
+    const list = useSelector( (state) => state.todo);
+
+    // const {dispatch} = useContext(todoDispatchContext);
 
     function onFinished(todo , isFinished){
-        dispatch({
-            type : 'finished-todo' , payload : {
-            todo : todo , 
-            isFinished : isFinished
-          }})
+        // dispatch({
+        //     type : 'finished-todo' , payload : {
+        //     todo : todo , 
+        //     isFinished : isFinished
+        //   }})
+
+        // Now
+        todoFinished(todo , isFinished)
     }
 
 
@@ -31,10 +47,12 @@ function Todolist(){
         // setList(updatedList);
 
         // Using reducer
-        dispatch({
-            type : 'delete-todo' , payload : {
-            todo : todo
-          }})
+        // dispatch({
+        //     type : 'delete-todo' , payload : {
+        //     todo : todo
+        //   }})
+
+        deleteTodo(todo);
     }
 
 
@@ -48,11 +66,13 @@ function Todolist(){
             // })
             // setList(updatedList);
 
-            dispatch({
-                type : 'edit-todo' , payload : {
-                todo , 
-                todoText
-              }})
+            // dispatch({
+            //     type : 'edit-todo' , payload : {
+            //     todo , 
+            //     todoText
+            //   }})
+
+            editTodo(todo , todoText);
     }
     
 

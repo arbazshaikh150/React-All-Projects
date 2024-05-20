@@ -3,7 +3,10 @@
 
 // UseReducer hook 
 
-function todoReducer(state , action){
+//  State ka default value dena bhot zaruri hai , warna error nhi dhundh paoge
+
+
+function todoReducer(state = [], action){
     // Action of execute karenge based on its type (joh string hogi)
     if(action.type === 'add-todo'){
         // Inn sab ke related operation action ke payload mai rhegi!!
