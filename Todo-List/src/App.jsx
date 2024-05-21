@@ -6,12 +6,16 @@ import Todolist from './components/TodoList/Todolist'
 
 // Importing context
 import TodoContext from './context/todoContext.js';
-import todoReducer from './reducers/todoReducer.js';
+// import todoReducer from './reducers/todoReducer.js';
 
 import TodoDispatchContext from './context/todoDispatchContext.js';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addTodo, deleteTodo, editTodo, todoFinished } from './actions/todoAction.js';
+// import { addTodo, deleteTodo, editTodo, todoFinished } from './actions/todoAction.js';
+
+
+// Using redux toolkit
+import todoReducer , {addTodo , editTodo , deleteTodo , todoFinished} from './slices/todoSlice.js'
 
 
 // import { useContext } from 'react';

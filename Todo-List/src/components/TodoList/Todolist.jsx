@@ -25,7 +25,7 @@ function Todolist({deleteTodo , editTodo , todoFinished}){
     // state.todo means joh hamne key value diye the na wohi le rha hai
 
     // List ka access (joh phle ham context se laa rhe the)
-    const list = useSelector( (state) => state.todo);
+    const list = useSelector( (state) => state.todo.todoList);
 
     // const {dispatch} = useContext(todoDispatchContext);
 
@@ -37,7 +37,7 @@ function Todolist({deleteTodo , editTodo , todoFinished}){
         //   }})
 
         // Now
-        todoFinished(todo , isFinished)
+        todoFinished({todo , isFinished})
     }
 
 
@@ -52,7 +52,7 @@ function Todolist({deleteTodo , editTodo , todoFinished}){
         //     todo : todo
         //   }})
 
-        deleteTodo(todo);
+        deleteTodo({todo});
     }
 
 
@@ -72,7 +72,7 @@ function Todolist({deleteTodo , editTodo , todoFinished}){
             //     todoText
             //   }})
 
-            editTodo(todo , todoText);
+            editTodo({todo , todoText});
     }
     
 

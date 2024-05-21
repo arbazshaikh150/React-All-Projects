@@ -28,6 +28,11 @@ import {useDispatch} from 'react-redux'
 
 
 
+// Chote se todo application ke liye bhi itni saari code karni padi , redux se then ek dusri library nikali (redux - tool kit).
+
+// npm i @reduxjs/toolkit (installing)
+
+
 
 function Addtodo({addTodo}){
 
@@ -66,7 +71,9 @@ function Addtodo({addTodo}){
 
 
                 // Privacy
-                addTodo((inputText))
+
+                // Passing the payload
+                addTodo({todoText : inputText})
 
                 
                 // Yeh karna mat bhulo
