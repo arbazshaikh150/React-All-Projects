@@ -6,7 +6,6 @@ import axios from "axios";
 function GetImage(url){
     // Console. log ki tab yeh aisa aa rha hai pata chala
     const source = url.url;
-    console.log(source);
     //  Image printing
 
     // Return karna nhi bhulna hai mere bhai
