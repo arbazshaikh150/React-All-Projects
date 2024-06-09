@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Search from './components/Search'
 import CustomRoutes from './routes/CustomRoutes'
+import SearchDex from './components/SearchDex'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -12,10 +13,9 @@ function App() {
     // Upper Part
     // Search Box
     <div>
-      <Search/>
-
+      {/* <Search/> */}
       {/* Routes */}
-      <CustomRoutes />
+      <SearchDex />
     </div>
   )
 }
